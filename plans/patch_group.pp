@@ -20,7 +20,7 @@ plan os_patching::patch_group (
     out::message("patch_group.pp: Patching batches created: ${batches}")
 
     $batches.each |$batch| {
-      out::message("patch_group.pp: Patching batch size: ${batch.size} with nodes: ${batch}")
+      out::message("patch_group.pp: Patching with nodes: ${batch}")
       $result = run_plan('os_patching::batch', { batch => $batch })
     }
   } else {
