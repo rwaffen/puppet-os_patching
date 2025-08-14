@@ -41,7 +41,7 @@ plan os_patching::batch (
       _catch_errors => $catch_errors,
     )
 
-    out::message("patch_batch.pp: Patching task result: ${task_result}")
+    log::debug("patch_batch.pp: Patching task result for ${targets}: ${task_result}")
 
     $successful_patched_nodes = $task_result.ok_set.names
     $failed_patched_nodes     = $task_result.error_set.names
