@@ -26,7 +26,7 @@ plan os_patching::patch_group (
 
     # Merge all batch results into a single hash
     $result = $batch_results.reduce({}) |$merged, $batch_result| {
-      stdlib::merge($merged, $batch_result)
+      $merged + $batch_result
     }
   } else {
     out::message('patch_group.pp: Patching in batches is disabled')
