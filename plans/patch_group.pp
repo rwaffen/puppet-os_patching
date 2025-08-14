@@ -19,9 +19,14 @@ plan os_patching::patch_group (
     $batches = slice($targets, $batch_size)
     out::message("patch_group.pp: Patching batches created: ${batches}")
 
-    $result = $batches.map |$batch| {
+    $batch_results = $batches.map |$batch| {
       # out::message("patch_group.pp: Patching with nodes: ${batch}")
       run_plan('os_patching::patch_batch', { batch => $batch })
+    }
+
+    # Merge all batch results into a single hash
+    $result = $batch_results.reduce({}) |$merged, $batch_result| {
+      merge($merged, $batch_result)
     }
   } else {
     out::message('patch_group.pp: Patching in batches is disabled')
