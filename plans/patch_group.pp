@@ -1,4 +1,4 @@
-# @summary Patch nodes
+# @summary Patch nodes collected by a fact group
 #
 plan os_patching::patch_group (
   String[1] $group,

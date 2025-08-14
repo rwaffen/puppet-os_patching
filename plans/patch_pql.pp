@@ -1,4 +1,4 @@
-# @summary Patch nodes
+# @summary Patch nodes collected by a PQL query
 #
 plan os_patching::patch_pql (
   String[1] $pql_query      = 'inventory[certname] { facts.os.family = "redhat" }',
