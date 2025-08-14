@@ -51,7 +51,6 @@ plan os_patching::patch_batch (
   return(
     {
       targets      => $targets,
-      batch        => $batch,
       patched      => $successful_patched_nodes,
       failed       => $failed_patched_nodes,
       skipped      => $skipped_nodes,
