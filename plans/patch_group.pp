@@ -24,9 +24,23 @@ plan os_patching::patch_group (
       run_plan('os_patching::patch_batch', { batch => $batch })
     }
 
-    # Merge all batch results into a single hash
-    $result = $batch_results.reduce({}) |$merged, $batch_result| {
-      $merged + $batch_result
+    # Merge all batch results into a single hash by combining arrays
+    $initial_result = {
+      'targets'      => [],
+      'patched'      => [],
+      'failed'       => [],
+      'skipped'      => [],
+      'health_check' => $batch_results[0]['health_check'], # Get from first batch
+    }
+
+    $result = $batch_results.reduce($initial_result) |$merged, $batch_result| {
+      {
+        'targets'      => ($merged['targets'] + $batch_result['targets']).flatten,
+        'patched'      => ($merged['patched'] + $batch_result['patched']).flatten,
+        'failed'       => ($merged['failed'] + $batch_result['failed']).flatten,
+        'skipped'      => ($merged['skipped'] + $batch_result['skipped']).flatten,
+        'health_check' => $merged['health_check'],
+      }
     }
   } else {
     out::message('patch_group.pp: Patching in batches is disabled')
