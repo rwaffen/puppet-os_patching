@@ -11,7 +11,6 @@ plan os_patching::batch (
 ) {
   out::message("Patching batch of nodes: ${batch}")
 
-  $certnames = $batch.map | $item | { $item['certname'] }
   $targets   = get_targets($batch)
 
   if $run_health_check {
