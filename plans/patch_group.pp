@@ -17,6 +17,7 @@ plan os_patching::patch_group (
     out::message("Patching in batches of size: ${batch_size}")
 
     $batches = slice($targets, $batch_size)
+    out::message("Patching batches created: ${batches}")
 
     $batches.each |$batch| {
       out::message("Patching batch of size: ${batch.size} with nodes: ${batch}")
