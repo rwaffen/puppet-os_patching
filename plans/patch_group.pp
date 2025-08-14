@@ -21,4 +21,6 @@ plan os_patching::patch_group (
   } else {
     $result = run_plan('os_patching::batch', { batch => $targets })
   }
+
+  return $result
 }
