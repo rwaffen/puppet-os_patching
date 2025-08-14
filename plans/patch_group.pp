@@ -13,9 +13,13 @@ plan os_patching::patch_group (
   out::message("Targets in group: ${targets}")
 
   if $patch_in_batches {
+    out::message('Patching in batches is enabled')
+    out::message("Patching in batches of size: ${batch_size}")
+
     $batches = slice($targets, $batch_size)
 
     $batches.each |$batch| {
+      out::message("Patching batch of size: ${batch.size} with nodes: ${batch}")
       $result = run_plan('os_patching::batch', { batch => $batch })
     }
   } else {
