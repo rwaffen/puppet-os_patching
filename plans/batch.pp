@@ -9,7 +9,7 @@ plan os_patching::batch (
   Boolean $service_running  = true,
   Integer $runinterval      = 1800,
 ) {
-  out::message("Patching batch of nodes: ${batch}")
+  out::message("batch.pp: Patching batch of nodes: ${batch}")
 
   $targets   = get_targets($batch)
 

@@ -9,21 +9,23 @@ plan os_patching::patch_group (
   $certnames = $pql_query.map |$item| { $item['certname'] }
   $targets   = get_targets($certnames)
 
-  out::message("Patching group: ${group}")
-  out::message("Targets in group: ${targets}")
+  out::message("patch_group.pp: Patching group: ${group}")
+  out::message("patch_group.pp: Targets in group: ${targets}")
 
   if $patch_in_batches {
-    out::message('Patching in batches is enabled')
-    out::message("Patching in batches of size: ${batch_size}")
+    out::message('patch_group.pp: Patching in batches is enabled')
+    out::message("patch_group.pp: Patching in batches of size: ${batch_size}")
 
     $batches = slice($targets, $batch_size)
-    out::message("Patching batches created: ${batches}")
+    out::message("patch_group.pp: Patching batches created: ${batches}")
 
     $batches.each |$batch| {
-      out::message("Patching batch of size: ${batch.size} with nodes: ${batch}")
+      out::message("patch_group.pp: Patching batch size: ${batch.size} with nodes: ${batch}")
       $result = run_plan('os_patching::batch', { batch => $batch })
     }
   } else {
+    out::message('patch_group.pp: Patching in batches is disabled')
+    out::message("patch_group.pp: Patching all targets at once: ${targets}")
     $result = run_plan('os_patching::batch', { batch => $targets })
   }
 
