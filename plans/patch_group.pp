@@ -21,12 +21,12 @@ plan os_patching::patch_group (
 
     $result = $batches.map |$batch| {
       # out::message("patch_group.pp: Patching with nodes: ${batch}")
-      run_plan('os_patching::batch', { batch => $batch })
+      run_plan('os_patching::patch_batch', { batch => $batch })
     }
   } else {
     out::message('patch_group.pp: Patching in batches is disabled')
     out::message("patch_group.pp: Patching all targets at once: ${targets}")
-    $result = run_plan('os_patching::batch', { batch => $targets })
+    $result = run_plan('os_patching::patch_batch', { batch => $targets })
   }
 
   return $result

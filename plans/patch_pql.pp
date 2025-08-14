@@ -13,9 +13,9 @@ plan os_patching::patch_pql (
     $batches = slice($targets, $batch_size)
 
     $batches.each |$batch| {
-      $result = run_plan('os_patching::batch', { batch => $batch })
+      $result = run_plan('os_patching::patch_batch', { batch => $batch })
     }
   } else {
-    $result = run_plan('os_patching::batch', { batch => $targets })
+    $result = run_plan('os_patching::patch_batch', { batch => $targets })
   }
 }
