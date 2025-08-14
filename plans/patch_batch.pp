@@ -1,6 +1,6 @@
 # @summary Patch nodes in a batch
 #
-plan os_patching::batch (
+plan os_patching::patch_batch (
   Array $batch              = [],
   Boolean $catch_errors     = true,
   Boolean $noop_state       = false,
