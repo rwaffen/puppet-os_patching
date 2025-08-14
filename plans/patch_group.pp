@@ -19,9 +19,9 @@ plan os_patching::patch_group (
     $batches = slice($targets, $batch_size)
     out::message("patch_group.pp: Patching batches created: ${batches}")
 
-    $batches.each |$batch| {
+    $result = $batches.map |$batch| {
       # out::message("patch_group.pp: Patching with nodes: ${batch}")
-      $result = run_plan('os_patching::batch', { batch => $batch })
+      run_plan('os_patching::batch', { batch => $batch })
     }
   } else {
     out::message('patch_group.pp: Patching in batches is disabled')
