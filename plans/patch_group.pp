@@ -9,6 +9,9 @@ plan os_patching::patch_group (
   $certnames = $pql_query.map |$item| { $item['certname'] }
   $targets   = get_targets($certnames)
 
+  out::message("Patching group: ${group}")
+  out::message("Targets in group: ${targets}")
+
   if $patch_in_batches {
     $batches = slice($targets, $batch_size)
 
