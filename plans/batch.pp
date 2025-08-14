@@ -14,6 +14,7 @@ plan os_patching::batch (
   $targets   = get_targets($batch)
 
   if $run_health_check {
+    out::message('batch.pp: Running health check before patching')
     run_task('os_patching::health_check', $targets,
       _catch_errors          => $catch_errors,
       target_noop_state      => $noop_state,
@@ -35,9 +36,12 @@ plan os_patching::batch (
     $successful_patched_nodes = $task_result.ok_set.names
     $failed_patched_nodes     = $task_result.error_set.names
   } else {
+    out::message('batch.pp: Health check is not enabked.')
     $task_result = run_task('os_patching::patch_server', $targets,
       _catch_errors => $catch_errors,
     )
+
+    out::message("batch.pp: Patching task result: ${task_result}")
 
     $successful_patched_nodes = $task_result.ok_set.names
     $failed_patched_nodes     = $task_result.error_set.names
